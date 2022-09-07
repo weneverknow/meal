@@ -17,3 +17,10 @@ List Food and Favourite Food Management with BLoC and Drift
 <li>Delete Favourite Food</li>
 <li>Food Detail</li>
 </ul>
+
+
+<b>Preview</b>
+
+
+https://user-images.githubusercontent.com/4042994/188879509-ad1a48d2-b80e-4600-9ba4-7d9f049fe018.mp4
+

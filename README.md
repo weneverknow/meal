@@ -1,16 +1,26 @@
-# meal
+# Meal
 
-A new Flutter project.
+List Food and Favourite Food Management with BLoC and Drift
 
-## Getting Started
+<p>Packages:</p>
+<ul>
+  <li>flutter_bloc: ^8.1.1</li>
+  <li>drift: ^2.1.0</li>
+  <li>flutter_modular: ^3.4.1</li>
+  <li>dio: ^4.0.6</li>
+</ul>
 
-This project is a starting point for a Flutter application.
+<p>Features:</>
+<ul>
+<li>List Food</li>
+<li>Add Favourite Food</li>
+<li>Delete Favourite Food</li>
+<li>Food Detail</li>
+</ul>
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<b>Preview</b>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+https://user-images.githubusercontent.com/4042994/188879509-ad1a48d2-b80e-4600-9ba4-7d9f049fe018.mp4
+

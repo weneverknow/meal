@@ -53,12 +53,4 @@ class FoodModel extends Food {
       ingredients5: json['strIngredient5'],
       measure5: json['strMeasure5'],
       desc: json['strInstructions']);
-
-  // Map<String, dynamic> toJson() => {
-  //       'id': id,
-  //       'name': name,
-  //       'category': category,
-  //       'tag': tag ?? '',
-  //       'image': image
-  //     };
 }

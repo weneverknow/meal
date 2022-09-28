@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal/src/features/home/domain/entities/food_category.dart';
 
-import '../../../../config/style.dart';
+import '../../../../core/config/style.dart';
 import '../bloc/food_category_bloc.dart';
 import '../bloc/food_category_selected_bloc.dart';
 

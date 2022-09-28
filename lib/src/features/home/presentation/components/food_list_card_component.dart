@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart' as fm;
-import 'package:meal/src/features/add_food_favourite/data/model/food_favourite.dart';
-import 'package:meal/src/features/add_food_favourite/presentation/bloc/food_favourite_bloc.dart';
-import 'package:meal/src/features/food_detail/presentation/page/food_detail_screen.dart';
-import '../../../../config/my_db.dart';
-import '../../../../config/style.dart';
-import '../../../add_food_favourite/data/datasource/food_favourite_data_source.dart';
-import '../../../add_food_favourite/data/repositories/food_favourite_repository_impl.dart';
+import 'package:meal/src/features/favourite_food/data/model/food_favourite.dart';
+import 'package:meal/src/features/favourite_food/domain/usecase/get_food_by_id.dart';
+import 'package:meal/src/features/favourite_food/domain/usecase/insert_favourite_food.dart'
+    as insertFavFood;
+import '../../../../core/config/style.dart';
+import '../../../favourite_food/data/repositories/food_favourite_repository_impl.dart';
+import '../../../favourite_food/domain/entity/food_favourite.dart';
+import '../../../favourite_food/domain/usecase/delete_favourite_food.dart'
+    as deleteFavFood;
+import '../../../favourite_food/presentation/bloc/food_favourite_bloc.dart';
 import '../../domain/entities/food.dart';
 import '../bloc/food_bloc.dart';
 import '../bloc/food_category_selected_bloc.dart';
+import '../../../../service_locator.dart';
 
 class FoodListCardComponent extends StatelessWidget {
   //FoodListCardComponent({Key? key}) : super(key: key);
 
-  final foodRepository =
-      FoodFavouriteRepositoryImpl(FoodFavouriteDataSourceImpl(MyDb.mydb!));
+  // final getFoodById = GetFoodById(sl<FoodFavouriteRepositoryImpl>());
+  // final deleteFavouriteFood =
+  //     deleteFavFood.DeleteFavouriteFood(sl<FoodFavouriteRepositoryImpl>());
+  // final insertFavouriteFood =
+  //     insertFavFood.InsertFavouriteFood(sl<FoodFavouriteRepositoryImpl>());
 
   @override
   Widget build(BuildContext context) {
@@ -117,25 +124,37 @@ class FoodListCardComponent extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: () async {
-                        FoodFavourite? isExist = await foodRepository
-                            .getFoodById(int.tryParse(food.id) ?? 0);
-                        print("isExist $isExist");
-                        if (isExist != null) {
-                          await foodRepository
-                              .delete(int.tryParse(food.id) ?? 0);
-                          context.read<FoodFavouriteBloc>().add(
-                              DeleteFavouriteFood(int.tryParse(food.id) ?? 0));
-                        } else {
-                          await foodRepository.insert(food);
-                          context.read<FoodFavouriteBloc>().add(
-                              AddFavouriteFood(FoodFavourite(
-                                  id: int.tryParse(food.id) ?? 0,
-                                  foodId: int.tryParse(food.id) ?? 0,
-                                  category: food.category,
-                                  name: food.name,
-                                  image: food.image,
-                                  tags: food.tag)));
-                        }
+                        var fav = FoodFavourite(
+                            id: int.tryParse(food.id) ?? 0,
+                            foodId: int.tryParse(food.id) ?? 0,
+                            category: food.category,
+                            name: food.name,
+                            image: food.image,
+                            tags: food.tag);
+                        context
+                            .read<FoodFavouriteBloc>()
+                            .add(ManageFavouriteFood(fav));
+
+                        // FoodFavourite? isExist = await foodRepository
+                        //     .getFoodById(int.tryParse(food.id) ?? 0);
+                        // final fr =
+                        //     await getFoodById.call(int.tryParse(food.id) ?? 0);
+                        // fr.fold((l) async {
+                        //   await insertFavouriteFood.call(food);
+                        //   context.read<FoodFavouriteBloc>().add(
+                        //       AddFavouriteFood(FoodFavourite(
+                        //           id: int.tryParse(food.id) ?? 0,
+                        //           foodId: int.tryParse(food.id) ?? 0,
+                        //           category: food.category,
+                        //           name: food.name,
+                        //           image: food.image,
+                        //           tags: food.tag)));
+                        // }, (r) async {
+                        //   await deleteFavouriteFood
+                        //       .call(int.tryParse(food.id) ?? 0);
+                        //   context.read<FoodFavouriteBloc>().add(
+                        //       DeleteFavouriteFood(int.tryParse(food.id) ?? 0));
+                        // });
                       },
                       child: Container(
                         padding: const EdgeInsets.all(5),

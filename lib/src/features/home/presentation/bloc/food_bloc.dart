@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meal/src/core/usecase/usecase.dart';
 import 'package:meal/src/features/home/domain/entities/food.dart';
 import 'package:meal/src/features/home/domain/usecases/food_get_all.dart';
 import 'package:meta/meta.dart';
@@ -21,11 +22,7 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
   void loadFood(FoodEvent event, Emitter<FoodState> emit) async {
     print("[FoodBloc] loadFood executed");
     emit(FoodLoading());
-    final result = await foodGetAll.getAll();
-    if (result != null) {
-      emit(FoodLoaded(result));
-    } else {
-      emit(FoodFailure());
-    }
+    final result = await foodGetAll.call(NoParam());
+    result.fold((l) => emit(FoodFailure()), (r) => emit(FoodLoaded(r)));
   }
 }

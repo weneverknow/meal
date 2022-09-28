@@ -36,24 +36,6 @@ class Food extends Equatable {
       this.measure5,
       this.desc});
 
-  factory Food.fromJson(Map<String, dynamic> json) => Food(
-      id: json['idMeal'],
-      name: json['strMeal'],
-      category: json['strCategory'],
-      image: json['strMealThumb'],
-      tag: json['strTags'],
-      ingredients1: json['strIngredient1'],
-      measure1: json['strMeasure1'],
-      ingredients2: json['strIngredient2'],
-      measure2: json['strMeasure2'],
-      ingredients3: json['strIngredient3'],
-      measure3: json['strMeasure3'],
-      ingredients4: json['strIngredient4'],
-      measure4: json['strMeasure4'],
-      ingredients5: json['strIngredient5'],
-      measure5: json['strMeasure5'],
-      desc: json['strInstructions']);
-
   List<String> makeIngredients() => [
         ingredients1!,
         ingredients2!,

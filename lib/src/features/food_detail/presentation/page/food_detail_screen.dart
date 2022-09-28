@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:meal/src/config/style.dart';
-import 'package:meal/src/features/add_food_favourite/data/repositories/food_favourite_repository_impl.dart';
-import 'package:meal/src/widget/my_text.dart';
+import 'package:meal/src/core/config/style.dart';
+import 'package:meal/src/core/widget/my_text.dart';
 
-import '../../../../config/my_db.dart';
-import '../../../add_food_favourite/data/datasource/food_favourite_data_source.dart';
-import '../../../add_food_favourite/data/model/food_favourite.dart';
-import '../../../add_food_favourite/presentation/bloc/food_favourite_bloc.dart';
+import '../../../favourite_food/data/model/food_favourite.dart';
+import '../../../favourite_food/domain/entity/food_favourite.dart';
+import '../../../favourite_food/presentation/bloc/food_favourite_bloc.dart';
 import '../../../home/domain/entities/food.dart';
 
 class FoodDetailScreen extends StatefulWidget {
@@ -22,12 +20,9 @@ class FoodDetailScreen extends StatefulWidget {
 class _FoodDetailScreenState extends State<FoodDetailScreen> {
   TitleText? _titleText;
   SubtitleText? _subtitleText;
-  late FoodFavouriteRepositoryImpl foodRepository;
 
   @override
   void initState() {
-    foodRepository =
-        FoodFavouriteRepositoryImpl(FoodFavouriteDataSourceImpl(MyDb.mydb!));
     // TODO: implement initState
     super.initState();
   }
@@ -79,25 +74,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                   Icons.favorite_border_rounded,
                                   color: Colors.white,
                                 ), onTap: () async {
-                        FoodFavourite? isExist = await foodRepository
-                            .getFoodById(int.tryParse(widget.food.id) ?? 0);
-                        if (isExist != null) {
-                          await foodRepository
-                              .delete(int.tryParse(widget.food.id) ?? 0);
-                          context.read<FoodFavouriteBloc>().add(
-                              DeleteFavouriteFood(
-                                  int.tryParse(widget.food.id) ?? 0));
-                        } else {
-                          await foodRepository.insert(widget.food);
-                          context.read<FoodFavouriteBloc>().add(
-                              AddFavouriteFood(FoodFavourite(
-                                  id: int.tryParse(widget.food.id) ?? 0,
-                                  foodId: int.tryParse(widget.food.id) ?? 0,
-                                  category: widget.food.category,
-                                  name: widget.food.name,
-                                  image: widget.food.image,
-                                  tags: widget.food.tag)));
-                        }
+                        var fav = FoodFavourite(
+                            id: int.tryParse(widget.food.id) ?? 0,
+                            foodId: int.tryParse(widget.food.id) ?? 0,
+                            category: widget.food.category,
+                            name: widget.food.name,
+                            image: widget.food.image,
+                            tags: widget.food.tag);
+                        context
+                            .read<FoodFavouriteBloc>()
+                            .add(ManageFavouriteFood(fav));
                       });
                     },
                   )

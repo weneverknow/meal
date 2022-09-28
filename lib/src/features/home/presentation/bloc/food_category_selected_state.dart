@@ -1,11 +1,6 @@
 part of 'food_category_selected_bloc.dart';
 
-abstract class FoodCategorySelectedState extends Equatable {
-  // const FoodCategorySelectedState();
-
-  // @override
-  // List<Object> get props => [];
-}
+abstract class FoodCategorySelectedState extends Equatable {}
 
 class FoodCategorySelectedInitial extends FoodCategorySelectedState {
   @override

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:meal/src/config/style.dart';
-import 'package:meal/src/features/add_food_favourite/data/model/food_favourite.dart';
-import 'package:meal/src/features/add_food_favourite/presentation/bloc/food_favourite_bloc.dart';
-import 'package:meal/src/widget/my_text.dart';
+import 'package:meal/src/core/config/style.dart';
+import 'package:meal/src/features/favourite_food/data/model/food_favourite.dart';
+import 'package:meal/src/features/favourite_food/presentation/bloc/food_favourite_bloc.dart';
+import 'package:meal/src/core/widget/my_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../favourite_food/domain/entity/food_favourite.dart';
 
 class FavouriteCardComponent extends StatelessWidget {
   const FavouriteCardComponent({Key? key}) : super(key: key);
@@ -84,7 +86,7 @@ class FavouriteCardComponent extends StatelessWidget {
                       Flexible(
                           fit: FlexFit.tight,
                           child: Text(
-                            food.name,
+                            food.name ?? '',
                             maxLines: 1,
                             overflow: TextOverflow.clip,
                           )),

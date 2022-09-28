@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meal/src/core/config/style.dart';
+import 'package:meal/src/core/widget/loading_dialog.dart';
 import 'package:meal/src/features/registration/presentation/bloc/member_bloc.dart';
 
 import '../bloc/welcome_validation_cubit.dart';
@@ -15,6 +16,15 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final _nameController = TextEditingController();
+
+  late LoadingDialog _loadingDialog;
+
+  @override
+  void initState() {
+    _loadingDialog = LoadingDialog(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,31 +35,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         },
         listener: (context, state) {
           if (state is MemberLoading) {
-            showDialog(
-                //barrierColor: Colors.transparent,
-
-                context: context,
-                builder: (context) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FittedBox(
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 209, 208, 208),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: primarycolor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                });
+            _loadingDialog.show();
           }
           if (state is MemberLoaded) {
             //Navigator.pop(context);
